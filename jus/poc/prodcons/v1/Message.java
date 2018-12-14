@@ -6,5 +6,12 @@ package jus.poc.prodcons.v1;
  *
  */
 public class Message {
-	String m_message;
+	int m_message;
+	
+	public Message (int m) {
+		m_message = m;
+	}
+	public String toString() {
+		return Integer.toString(m_message);
+	}
 }
