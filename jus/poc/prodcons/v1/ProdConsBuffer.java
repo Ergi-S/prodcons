@@ -1,24 +1,54 @@
 package jus.poc.prodcons.v1;
 
-public class ProdConsBuffer  implements IProdConsBuffer{
+public class ProdConsBuffer implements IProdConsBuffer {
+
+	Message buff[];
+
+	public ProdConsBuffer(int size) {
+		buff = new Message[size];
+	}
 
 	@Override
-	public void put(Message m) throws InterruptedException {
-		// TODO Auto-generated method stub
+	synchronized public void put(Message m) throws InterruptedException {
+		while (nmsg() >= buff.length)
+			wait();
 		
+		for (int i = 0; i < buff.length; i++) {
+			if (buff[i] == null) {
+				buff[i] = m;
+				break;
+			}
+		}
+		
+		notifyAll();
 	}
 
 	@Override
-	public Message get() throws InterruptedException {
-		// TODO Auto-generated method stub
-		return null;
+	synchronized public Message get() throws InterruptedException {
+		while(nmsg() == 0)
+			wait();
+		
+		Message m = buff[0];
+		for (int i = 1; i < buff.length; i++) {
+			buff[i-1] = buff[i];
+			if(buff[i] == null)
+				break;
+		}
+		buff[buff.length-1] = null;
+		
+		notifyAll();
+		
+		return m;
 	}
 
 	@Override
-	public int nmsg() {
-		// TODO Auto-generated method stub
-		return 0;
+	synchronized public int nmsg() {
+		int n = 0;
+		for(int i = 0; i < buff.length; i++) {
+			if (buff[i] != null)
+				n++;
+			else break;
+		}
+		return n;
 	}
-	
-
 }
