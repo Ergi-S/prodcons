@@ -4,6 +4,8 @@ package jus.poc.prodcons.v1;
  * Classe Producteur
  *
  */
+
+  /* test pour merge */
 public class Producteur extends Thread {
 	ProdConsBuffer m_buff;
 	int m_id;
