@@ -1,4 +1,4 @@
-package jus.poc.prodcons.v1;
+package jus.poc.prodcons.v2;
 
 import java.util.Random;
 
@@ -37,7 +37,7 @@ public class Producteur extends Thread {
 	public void run() {
 		for (int i = 0; i <= m_nmsg; i++) {
 			Message m = new Message(i, m_id);
-			try {
+			try {	
 				m_buff.put(m);
 				System.out.println("Putted msg: " + i + " by prod " + m_id);
 				System.out.flush();
