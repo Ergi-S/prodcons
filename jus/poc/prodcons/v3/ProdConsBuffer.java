@@ -28,7 +28,7 @@ public class ProdConsBuffer implements IProdConsBuffer {
 		while (nmsg() == 0)
 			wait();
 	
-		buff[0].decr();
+		buff[0].decr(); // m_exmpl -- every time we get a message
 		Message m = buff[0];
 		if (m.m_exempl == 0) {
 			for (int i = 1; i < buff.length; i++) {

@@ -1,9 +1,7 @@
 package jus.poc.prodcons.v2;
 
 /**
- * 
- * Classe Message
- *
+ * Message Class
  */
 public class Message {
 	int m_prod;

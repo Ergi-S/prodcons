@@ -3,7 +3,7 @@ package jus.poc.prodcons.v2;
 import java.util.Random;
 
 /**
- * Classe Consommateur
+ * Consumer Class
  */
 public class Consommateur implements Runnable {
 
@@ -13,8 +13,10 @@ public class Consommateur implements Runnable {
 	int m_consTime;
 
 	public Consommateur(ProdConsBuffer buff, int id, int consTime) {
+		/* Time Calculation - Same idea as a Producer */
 		Random r = new Random();
 		int maxTime = (int) (2 * consTime);
+		
 		m_consTime = r.nextInt(maxTime);
 		m_buff = buff;
 		m_id = id;
@@ -29,12 +31,12 @@ public class Consommateur implements Runnable {
 			System.out.println("got msg: " + m + " by cons " + m_id);
 			System.out.flush();
 			Thread.sleep(m_consTime * 1000);
-			
+
 		} catch (InterruptedException e) {
 		}
 	}
-	
-	public void join()throws InterruptedException {
-		t.join();     
+
+	public void join() throws InterruptedException {
+		t.join();
 	}
 }

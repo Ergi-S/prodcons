@@ -3,8 +3,7 @@ package jus.poc.prodcons.v3;
 import java.util.Random;
 
 /**
- * Classe Producteur
- *
+ * Producer Class
  */
 public class Producteur extends Thread {
 	ProdConsBuffer m_buff;
@@ -26,9 +25,8 @@ public class Producteur extends Thread {
 		int maxMsg = (int) ((2 * mavg) - 1);
 		m_nmsg = r.nextInt(maxMsg) + 1;
 
-		// min = 0 here
 		int maxTime = (int) (2 * prodTime);
-		m_prodTime = r.nextInt(maxTime + 1) + 1;
+		m_prodTime = r.nextInt(maxTime) + 1;
 
 		m_buff = buff;
 		m_id = id;

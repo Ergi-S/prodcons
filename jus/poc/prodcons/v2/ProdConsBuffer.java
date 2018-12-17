@@ -17,9 +17,6 @@ public class ProdConsBuffer implements IProdConsBuffer {
 
 	@Override
 	 public void put(Message m) throws InterruptedException {
-		/*
-		 * while (nmsg() >= buff.length) wait();
-		 */
 		try {
 			sProd.acquire();
 			mutex.acquire();
@@ -39,9 +36,6 @@ public class ProdConsBuffer implements IProdConsBuffer {
 
 	@Override
 	 public Message get() throws InterruptedException {
-		/*
-		 * while(nmsg() == 0) wait();
-		 */
 		try {
 			sCons.acquire();
 			mutex.acquire();
