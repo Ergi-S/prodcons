@@ -5,9 +5,9 @@ import java.util.concurrent.Semaphore;
 public class ProdConsBuffer implements IProdConsBuffer {
 
 	Message buff[];
-	Semaphore sCons;
-	Semaphore sProd;
-	Semaphore mutex = new Semaphore(1);
+	Semaphore sCons; // lock for consumers 
+	Semaphore sProd; // lock for producers
+	Semaphore mutex = new Semaphore(1); // lock to synchronize buffer
 
 	public ProdConsBuffer(int size) {
 		buff = new Message[size];
@@ -18,8 +18,8 @@ public class ProdConsBuffer implements IProdConsBuffer {
 	@Override
 	 public void put(Message m) throws InterruptedException {
 		try {
-			sProd.acquire();
-			mutex.acquire();
+			sProd.acquire();  //Take a producer lock
+			mutex.acquire(); //Take a lock to assure the buffer synchronization
 		} catch (InterruptedException e) {
 			System.out.println("erreur");
 		}
@@ -30,15 +30,15 @@ public class ProdConsBuffer implements IProdConsBuffer {
 				break;
 			}
 		}
-		mutex.release();
-		sCons.release();
+		mutex.release(); // release the lock for synchronization	
+		sCons.release(); // release a consumer lock
 	}
 
 	@Override
 	 public Message get() throws InterruptedException {
 		try {
-			sCons.acquire();
-			mutex.acquire();
+			sCons.acquire(); // take a consumer lock
+			mutex.acquire(); //Take a lock to assure the buffer synchronization
 		} catch (InterruptedException e) {
 			System.out.println("erreur sCons acquire");
 		}
@@ -49,8 +49,8 @@ public class ProdConsBuffer implements IProdConsBuffer {
 				break;
 		}
 		buff[buff.length - 1] = null;
-		mutex.release();
-		sProd.release();
+		mutex.release(); // release the lock for synchronization
+		sProd.release(); // release a producer lock
 
 		return m;
 	}

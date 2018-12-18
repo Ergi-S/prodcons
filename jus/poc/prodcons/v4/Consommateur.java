@@ -29,14 +29,14 @@ public class Consommateur implements Runnable {
 	@Override
 	public void run() {
 		try {
-			m_buff.multi_cons.acquire();
+			m_buff.multi_cons.acquire(); // take a lock to assure the consumer has finished to get his messages
 			for (int i = 0; i < m_nbconso; i++) {
 				Message m = m_buff.get(m_nbconso);
 				System.out.println("got msg: " + m + " by cons " + m_id);
 				System.out.flush();
 				Thread.sleep(m_consTime * 1000);
 			}
-			m_buff.multi_cons.release();
+			m_buff.multi_cons.release(); // release the lock when the consumer get all his messages
 		} catch (InterruptedException e) {
 		}
 	}

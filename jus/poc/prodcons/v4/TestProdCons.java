@@ -16,6 +16,7 @@ public class TestProdCons {
 		int prodTime = Integer.parseInt(properties.getProperty("ProdTime"));
 		int consTime = Integer.parseInt(properties.getProperty("ConsTime"));
 		int mavg = Integer.parseInt(properties.getProperty("Mavg"));
+		int nb_consomsg = 2;
 
 		ProdConsBuffer buff = new ProdConsBuffer(bufSz);
 
@@ -29,7 +30,7 @@ public class TestProdCons {
 		while (i < nbC + nbP) {
 			double t = r.nextDouble();
 			if (t <= 0.5 && c < nbC) {
-				cons[c] = new Consommateur(buff, c, consTime,2);
+				cons[c] = new Consommateur(buff, c, consTime,nb_consomsg);
 				c++;
 				i++;
 			}
